@@ -1,0 +1,22 @@
+<%include partials/header%>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="text-center">
+            <%if(username){%>
+            <p>Succesfully logged in as <%=username%></p>
+            <%}%>
+        </h2>
+        <hr class="my-4">
+        <div class="container mid">
+            <div class="text-center">
+                <form action="/" method="GET">
+                    <button class="btn btn-primary mb-2">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+<%include partials/footer%>
