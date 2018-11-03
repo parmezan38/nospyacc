@@ -5,16 +5,20 @@ Username and Password can not be changed after creating the Account.
 
 ## Getting Started
 
-Install dependencies
+Install dependencies:
 
 ```npm install```
 
-Change your user, password and database info into /config/config.json
+Initialize sequelize:
 
-Migrate the database
+```sequelize init```
+
+Change your user, password and database info from /config/config.json
+
+Migrate the database:
 
 ```sequelize db:migrate```
 
-Start the server
+Start the server:
 
 ```node app.js```
