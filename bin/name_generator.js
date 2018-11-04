@@ -15,9 +15,9 @@ nameGenerator.generateNameAndCheckIfExists = function(){
 }
 nameGenerator.generateName = function(){
     nameGenerator.name = "";
-    var randPattern = nameGenerator.namingPatterns[Math.round(Math.random() * (nameGenerator.namingPatterns.length - 1) )];
-    for(var i = 0; i < randPattern.length; i++){
-        var currentType = randPattern[i];
+    let randPattern = nameGenerator.namingPatterns[Math.round(Math.random() * (nameGenerator.namingPatterns.length - 1) )];
+    for(let i = 0; i < randPattern.length; i++){
+        let currentType = randPattern[i];
         if (currentType === "two"){
             nameGenerator.name += nameGenerator.nameLib.twos[Math.round(Math.random() * (nameGenerator.nameLib.twos.length - 1) )];
         }
@@ -35,21 +35,21 @@ nameGenerator.generateName = function(){
 }
 // Capitalize Name (samo privremeno dok ne nades minimalnije rjesenje)
 nameGenerator.capitalizeAndRemoveUnderscores = function(name){
-    var returnName = name.replace(/_/g, ' ');
+    let returnName = name.replace(/_/g, ' ');
     return returnName.replace(/\w\S*/g, function(str){
         return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
     });
 }
 nameGenerator.decapitalizaAndRemoveSpaces = function(name){
-    var returnName = name.replace(/ /g, '_');
+    let returnName = name.replace(/ /g, '_');
     return returnName.toLowerCase();
 }
 nameGenerator.calculateNumberOfPossibleOriginalNames = function(){
     console.log("twos: " + nameGenerator.nameLib.twos.length + " threes: " + nameGenerator.nameLib.threes.length + " mids: " + nameGenerator.nameLib.mids.length)
-    var numOfPossibleNames = 0;
-    for(var i = 0; i < nameGenerator.namingPatterns.length; i++){
-        var patternReturnNum = 1;
-        for(var j = 0; j < nameGenerator.namingPatterns[i].length; j++){
+    let numOfPossibleNames = 0;
+    for(let i = 0; i < nameGenerator.namingPatterns.length; i++){
+        let patternReturnNum = 1;
+        for(let j = 0; j < nameGenerator.namingPatterns[i].length; j++){
             if (nameGenerator.namingPatterns[i][j] === "two"){
                 patternReturnNum *= nameGenerator.nameLib.twos.length; }
             else if(nameGenerator.namingPatterns[i][j] === "three"){
