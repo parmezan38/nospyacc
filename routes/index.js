@@ -9,7 +9,7 @@ router.get("/", function(req, res){
 });
 // Login
 router.post("/login", function(req, res){
-    var username = nameGenerator.decapitalizaAndRemoveSpaces(req.body.username.trim() ),
+    let username = nameGenerator.decapitalizaAndRemoveSpaces(req.body.username.trim() ),
     password = req.body.password.toLowerCase();
     db.user.findOne({ where: {name: username } }).then(user => {
         if (!user) {

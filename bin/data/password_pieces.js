@@ -1,4 +1,4 @@
-var passwordGenerator = {};
+let passwordGenerator = {};
 // RANDOM PASSWORD GENERATOR
 passwordGenerator.password = "";
 // Name Library Temlate

@@ -1,4 +1,4 @@
-var nameGenerator = {};
+let nameGenerator = {};
 // Pieces for creating the Username
 nameGenerator.nameLib = {
     twos: [

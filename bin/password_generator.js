@@ -1,7 +1,7 @@
 const passwordGenerator = require("./data/password_pieces"); 
 // Generate Function
 passwordGenerator.generatePassword = function(){
-    var password = "";
+    let password = "";
     for(let i = 0; i < passwordGenerator.nameLib.length; i++){
         password += passwordGenerator.nameLib[i][Math.round(Math.random() * (passwordGenerator.nameLib[i].length - 1) ) ];
     }

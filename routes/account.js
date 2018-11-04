@@ -3,8 +3,8 @@ const router = express.Router();
 const db = require("../models/index");
 const nameGenerator = require("../bin/name_generator");
 const passwordGenerator = require("../bin/password_generator");
-var userInfo = {};
-var shownUserInfo = {};
+let userInfo = {};
+let shownUserInfo = {};
 
 // Generate New Username And Password
 router.get("/new", function(req, res){
