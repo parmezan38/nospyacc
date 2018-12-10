@@ -15,6 +15,7 @@
         </div>
         <hr class="my-4">
         <div class="container mid">
+            <%if(!userInfo) {%>
             <h2 class="text-center">Log in</h2>
             <form action="/login" method="POST">
                 <div class="input-group mb-3">
@@ -33,6 +34,7 @@
                     <button type="submit" class="btn btn-primary mb-2">Login!</button>
                 </div>
             </form>
+            <%}%>
         </div>
     </div>
 </div>

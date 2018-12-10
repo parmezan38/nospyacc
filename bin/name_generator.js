@@ -1,77 +1,61 @@
-const nameGenerator = require("./data/name_pieces");
-const db = require("../models/index");
-
-// Generate Function
-nameGenerator.name = null;
-nameGenerator.generateNameAndCheckIfExists = function(){
-    return nameGenerator.findIfNameExistsInDB(nameGenerator.generateName()).then(doesExist => {
-        if(doesExist){
-            nameGenerator.name = null;
-            return nameGenerator.generateNameAndCheckIfExists();
-        } else {
-            return nameGenerator.name;
-        }
-    });
-}
-nameGenerator.generateName = function(){
-    nameGenerator.name = "";
-    let randPattern = nameGenerator.namingPatterns[Math.round(Math.random() * (nameGenerator.namingPatterns.length - 1) )];
-    for(let i = 0; i < randPattern.length; i++){
-        let currentType = randPattern[i];
-        if (currentType === "two"){
-            nameGenerator.name += nameGenerator.nameLib.twos[Math.round(Math.random() * (nameGenerator.nameLib.twos.length - 1) )];
-        }
-        else if(currentType === "three"){
-            nameGenerator.name += nameGenerator.nameLib.threes[Math.round(Math.random() * (nameGenerator.nameLib.threes.length - 1) )];
-        }
-        else if(currentType === "mid"){
-            nameGenerator.name += nameGenerator.nameLib.mids[Math.round(Math.random() * (nameGenerator.nameLib.mids.length - 1) )];
-        }
-        else if(currentType === 0){
-            nameGenerator.name += "_";
-        }
+const nameData = require('./data/name_pieces');
+const db = require('../models/index');
+const nameGenerator = {
+    name: null,
+    generateNameAndCheckIfExists: function(){
+        return this.findIfNameExistsInDB(this.generateName()).then(doesExist => {
+            if(doesExist){
+                this.name = null;
+                return this.generateNameAndCheckIfExists();
+            } else {
+                return this.name;
+            }
+        });
+    },
+    generateName: function(){
+        this.name = '';
+        let namingPatterns =  nameData.namingPatterns;
+        let randPattern = namingPatterns[Math.round(Math.random() * (namingPatterns.length - 1) )];
+        let nameLib = nameData.nameLib;
+        randPattern.forEach(currentType => {
+            let namePiece = currentType === 'two' ? nameLib.twos[Math.round(Math.random() * (nameLib.twos.length - 1) ) ] 
+                            : currentType === 'three' ? nameLib.threes[Math.round(Math.random() * (nameLib.threes.length - 1) ) ]
+                            : currentType === 'mid' ? nameLib.mids[Math.round(Math.random() * (nameLib.mids.length - 1) ) ]
+                            : '_';
+            this.name += namePiece;
+        });
+        return this.name;
+    },
+    capitalizeAndRemoveUnderscores: function(name){
+        let returnName = name.replace(/_/g, ' ');
+        return returnName.replace(/\w\S*/g, function(str){
+            return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
+        });
+    },
+    decapitalizaAndRemoveSpaces: function(name){
+        let returnName = name.replace(/ /g, '_');
+        return returnName.toLowerCase();
+    },
+    calculateNumberOfPossibleOriginalNames: function(){
+        let numOfPossibleNames = 0;
+        nameData.namingPatterns.forEach(namingPattern => {
+            let patternReturnNum = 1;
+            let nameLib = nameData.nameLib;
+            namingPattern.forEach(patternPart => {
+                let num =   patternPart === 'two' ? nameLib.twos.length
+                            : patternPart === 'three' ? nameLib.threes.length
+                            : nameLib.mids.length;
+                patternReturnNum *= num;
+            });
+            numOfPossibleNames += patternReturnNum; 
+        });
+        console.log(numOfPossibleNames);
+    },
+    findIfNameExistsInDB: function(name){
+        return db.user.findOne({ 
+            attributes: ['name'],
+            where: { name } }
+        ).then(found => { return found !== null ? true : false; });
     }
-    return nameGenerator.name;
-}
-// Capitalize Name (samo privremeno dok ne nades minimalnije rjesenje)
-nameGenerator.capitalizeAndRemoveUnderscores = function(name){
-    let returnName = name.replace(/_/g, ' ');
-    return returnName.replace(/\w\S*/g, function(str){
-        return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
-    });
-}
-nameGenerator.decapitalizaAndRemoveSpaces = function(name){
-    let returnName = name.replace(/ /g, '_');
-    return returnName.toLowerCase();
-}
-nameGenerator.calculateNumberOfPossibleOriginalNames = function(){
-    console.log("twos: " + nameGenerator.nameLib.twos.length + " threes: " + nameGenerator.nameLib.threes.length + " mids: " + nameGenerator.nameLib.mids.length)
-    let numOfPossibleNames = 0;
-    for(let i = 0; i < nameGenerator.namingPatterns.length; i++){
-        let patternReturnNum = 1;
-        for(let j = 0; j < nameGenerator.namingPatterns[i].length; j++){
-            if (nameGenerator.namingPatterns[i][j] === "two"){
-                patternReturnNum *= nameGenerator.nameLib.twos.length; }
-            else if(nameGenerator.namingPatterns[i][j] === "three"){
-                patternReturnNum *= nameGenerator.nameLib.threes.length; }
-            else if(nameGenerator.namingPatterns[i][j] === "mid"){
-                patternReturnNum *= nameGenerator.nameLib.mids.length; } 
-        }
-        console.log("Num of " + nameGenerator.namingPatterns[i] + ": " + patternReturnNum);
-        numOfPossibleNames += patternReturnNum; 
-    }
-    console.log("Num Of Possible Original Names: " + numOfPossibleNames);
-}
-
-nameGenerator.findIfNameExistsInDB = function(name){
-    return db.user.findOne({ 
-        attributes: ['name'],
-        where: {name: name} }
-    ).then(found => {
-        if (found !== null) {
-            return true;
-        }
-        return false;
-    });
-}
+};
 module.exports = nameGenerator;

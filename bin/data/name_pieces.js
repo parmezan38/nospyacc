@@ -1,6 +1,6 @@
-let nameGenerator = {};
+let nameData = {};
 // Pieces for creating the Username
-nameGenerator.nameLib = {
+nameData.nameLib = {
     twos: [
         "ai", "ao", "au",
         "bo", "ba", "be", "bu", "bl",
@@ -33,8 +33,8 @@ nameGenerator.nameLib = {
         "jao", "jou", "jin", "jag",
         "kao", "kou", "kai", "kan", "keg", "kas",
         "lao", "lua", "lee", "lou", "lin", "lon", "laa",
-        "mas", "mug", "mog", "mub", "meb",
-        "nan", "nuu", "non", "noi",
+        "mas", "mao", "mug", "mog", "mub", "meb",
+        "nan", "nuu", "non", "noi", "nah",
         "ova", "oni", "ono", "oma",
         "pau", "pon", "poi",
         "roo", "rau", "roi",
@@ -67,7 +67,7 @@ nameGenerator.nameLib = {
         "zan", "zon", "zai"]
 };
 // Patterns that combine the Pieces into a Name
-nameGenerator.namingPatterns = [
+nameData.namingPatterns = [
     ["two", 0, "two"],
     ["two", 0, "three"],
     ["two", 0, "mid"],
@@ -92,4 +92,4 @@ nameGenerator.namingPatterns = [
     ["mid", 0, "mid"]
 ];
 
-module.exports = nameGenerator;
+module.exports = nameData;

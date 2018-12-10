@@ -1,5 +1,5 @@
 'use strict'
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('users', {
@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: true
             }
+        },
+        color1: {
+            type: DataTypes.STRING
+        },
+        color2: {
+            type: DataTypes.STRING
         }
     }, {
         freezeTableName: true,
