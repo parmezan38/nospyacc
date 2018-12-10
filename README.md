@@ -33,3 +33,7 @@ Migrate the database:
 Start the server:
 
 ```node app.js```
+
+You can edit the data files in /bin/data to personalize name and password generation to your taste.
+Inside /bin/data/name_pieces.js there is an array of name pieces, called nameLib, which contains character pieces that are used to generate user names.
+Inside /bin/data/password_pieces.js there is an array of password pieces, called nameLib, which contains character pieces that are used to generate user passwords.
